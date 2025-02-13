@@ -9,7 +9,9 @@ class GlobalController extends GetxController {
   final RxDouble _latitude = 0.0.obs;
   final RxDouble _longitude = 0.0.obs;
   final RxInt _currentIndex = 0.obs;
+  final RxString _errorMessage = ''.obs;
 
+  RxString getErrorMessage() => _errorMessage;
 // instance for them to be called
   RxBool checkLoading() => _isLoading;
   RxDouble getLatitude() => _latitude;
@@ -37,42 +39,49 @@ class GlobalController extends GetxController {
 
     isServiceEnabled = await Geolocator.isLocationServiceEnabled();
     // return if service is not enabled
-    if (!isServiceEnabled) {
-      return Future.error('Location service is not enabled');
+    if (isServiceEnabled) {
+      _errorMessage.value =
+          'Location service is not enabled, Please enable it in the settings.';
+      _isLoading.value = false;
+      return;
     }
 
     // Status of location permission
 
     locationPermission = await Geolocator.checkPermission();
     if (locationPermission == LocationPermission.deniedForever) {
-      return Future.error('Location permission is denied forever');
+      _errorMessage.value = 'Location permission is denied forever';
+      _isLoading.value = false;
+      return;
     } else if (locationPermission == LocationPermission.denied) {
       // request permission
       locationPermission = await Geolocator.requestPermission();
       if (locationPermission == LocationPermission.denied) {
-        return Future.error('Location permission is denied');
-      }
-    }
-
-    // getting the cuurent location
-    return await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high)
-        .then((value) {
-      // Update the latitude and longitude
-      _latitude.value = value.latitude;
-      _longitude.value = value.longitude;
-      // calling our weather api
-
-      return FetchWeatherAPI()
-          .processData(value.latitude, value.longitude)
-          .then((value) {
-        weatherData.value = value;
+        _errorMessage.value = 'Location permission is denied';
         _isLoading.value = false;
-      });
+        return;
+      }
 
-      // print(_latitude.value);
-      // print(_longitude.value);
-    });
+      // getting the cuurent location
+      return await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.high)
+          .then((value) {
+        // Update the latitude and longitude
+        _latitude.value = value.latitude;
+        _longitude.value = value.longitude;
+        // calling our weather api
+
+        return FetchWeatherAPI()
+            .processData(value.latitude, value.longitude)
+            .then((value) {
+          weatherData.value = value;
+          _isLoading.value = false;
+        });
+
+        // print(_latitude.value);
+        // print(_longitude.value);
+      });
+    }
   }
 
   RxInt getIndex() {
