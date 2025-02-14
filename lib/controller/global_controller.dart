@@ -34,12 +34,13 @@ class GlobalController extends GetxController {
   }
 
   getLocation() async {
-    bool isServiceEnabled;
-    LocationPermission locationPermission;
+    _errorMessage.value = ''; // Clear error message
 
-    isServiceEnabled = await Geolocator.isLocationServiceEnabled();
+    // bool isServiceEnabled;
+
+    bool isServiceEnabled = await Geolocator.isLocationServiceEnabled();
     // return if service is not enabled
-    if (isServiceEnabled) {
+    if (!isServiceEnabled) {
       _errorMessage.value =
           'Location service is not enabled, Please enable it in the settings.';
       _isLoading.value = false;
@@ -48,6 +49,7 @@ class GlobalController extends GetxController {
 
     // Status of location permission
 
+    LocationPermission locationPermission;
     locationPermission = await Geolocator.checkPermission();
     if (locationPermission == LocationPermission.deniedForever) {
       _errorMessage.value = 'Location permission is denied forever';

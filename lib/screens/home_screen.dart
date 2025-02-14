@@ -6,6 +6,7 @@ import 'package:blue_sky/widgets/daily_data_forecast.dart';
 
 import 'package:blue_sky/widgets/header_widget.dart';
 import 'package:blue_sky/widgets/hourly_data_widget.dart';
+import 'package:blue_sky/widgets/sunset_and_sunrise.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,6 +52,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 showMyDialog(context);
               });
             }
+
+            // Safely check if the weatherData is available
+            final weatherData = globalController.getData();
+            if (weatherData.current == null ||
+                weatherData.hourly == null ||
+                weatherData.daily == null) {
+              return Center(child: Text('Weather data is unavailable.'));
+            }
             return Center(
               child: ListView(
                 scrollDirection: Axis.vertical,
@@ -81,6 +90,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   ComfortLevelWidget(
                       weatherDataCurrent:
                           globalController.getData().getCurrentWeather()),
+                  const SizedBox(height: 15),
+                  Container(
+                    height: 1,
+                    color: CustomColors.dividerLine,
+                  ),
+                  SunsetAndSunrise(
+                    sunriseAndSunset:
+                        globalController.getData().getSunsetAndSunrise(),
+                  ),
                 ],
               ),
             );
