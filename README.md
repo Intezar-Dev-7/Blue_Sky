@@ -1,11 +1,11 @@
-# Weather App (Flutter)
+# Weather App (Blue Sky)
 
 A simple and responsive weather application built with **Flutter** that provides real-time weather information . The app fetches weather data using the **OpenWeatherMap API**, allowing users to check temperature, humidity, wind speed, and other weather-related details.
 
 ## Features
 - Search for weather details by city name. (Not implemented)
 - Display current temperature, humidity, wind speed, and weather conditions.
-- Beautiful and responsive UI designed for both mobile and tablet.
+- Beautiful and responsive UI.
 - Integrated with **OpenWeatherMap API** for real-time weather data.
 
 ## Technologies Used
