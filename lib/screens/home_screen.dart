@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // Ensure the dialog is shown after the UI is built
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 debugPrint(
-                    'Error: ${globalController.getErrorMessage().value}');
+                    'Location : ${globalController.getErrorMessage().value}');
                 showMyDialog(context);
               });
             }
@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Error'),
+          title: const Text('Location is off'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[

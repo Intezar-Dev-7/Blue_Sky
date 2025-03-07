@@ -1,6 +1,6 @@
 import 'package:blue_sky/api/fetch_weather.dart';
 import 'package:blue_sky/controller/global_controller.dart';
-import 'package:blue_sky/service/notification_service.dart';
+import 'package:blue_sky/services/notification_service.dart';
 
 import 'package:get/get.dart';
 import 'package:workmanager/workmanager.dart';

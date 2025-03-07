@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationService {
@@ -9,10 +7,8 @@ class NotificationService {
       FlutterLocalNotificationsPlugin();
 
   static Future<void> init() async {
-    const AndroidInitializationSettings andriodInit =
-        AndroidInitializationSettings('@drawable/ic_launcher_foreground.png');
-    const InitializationSettings initSettings =
-        InitializationSettings(android: andriodInit);
+    var andriodInit = AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initSettings = InitializationSettings(android: andriodInit);
 
     await _notificationsPlugin.initialize(initSettings);
   }

@@ -1,5 +1,6 @@
 import 'package:blue_sky/screens/home_screen.dart';
-import 'package:blue_sky/service/background_notification.dart';
+import 'package:blue_sky/services/background_notification.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:workmanager/workmanager.dart';
@@ -15,7 +16,7 @@ void main() async {
   await Workmanager().registerPeriodicTask(
     "weatherTask",
     "fetchWeather",
-    frequency: const Duration(minutes: 5),
+    frequency: const Duration(minutes: 15),
   );
 
   runApp(const MyApp());
